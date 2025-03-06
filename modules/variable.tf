@@ -62,6 +62,14 @@ variable "webhook_event_pattern" {
     default = null
   
 }
+variable "filter_group" {
+    description = "The filter group for the webhook"
+    type = list(object({
+        type=string, 
+        pattern=string
+    }))
+    default = []
+}
 variable "branch" {
     description = "The branch to trigger the build"
     type        = string

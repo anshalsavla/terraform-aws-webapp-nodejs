@@ -36,14 +36,13 @@ resource "aws_codebuild_webhook" "codebuild_webhook" {
   project_name = aws_codebuild_project.codebuild.name
   build_type   = "BUILD"
   filter_group {
-    filter {
-      type    = var.webhook_event_type
-      pattern = var.webhook_event_pattern
-    }
-
-    filter {
-      type    = "BASE_REF"
-      pattern = var.branch
+    dynamic "filter" {
+      for_each = var.filter_group
+      content {
+        type    = filter.value.type
+        pattern = filter.value.pattern
+      }
+      
     }
   }
 }
