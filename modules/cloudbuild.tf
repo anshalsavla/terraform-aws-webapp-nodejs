@@ -43,7 +43,7 @@ resource "aws_codebuild_webhook" "codebuild_webhook" {
 
     filter {
       type    = "BASE_REF"
-      pattern = "master"
+      pattern = var.branch
     }
   }
 }

@@ -62,3 +62,9 @@ variable "webhook_event_pattern" {
     default = null
   
 }
+variable "branch" {
+    description = "The branch to trigger the build"
+    type        = string
+    default = "main"
+  
+}
