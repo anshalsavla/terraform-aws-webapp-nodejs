@@ -68,3 +68,10 @@ variable "branch" {
     default = "main"
   
 }
+
+variable "build_timeout" {
+    description = "The build timeout in minutes"
+    type        = number
+    default = 5
+  
+}

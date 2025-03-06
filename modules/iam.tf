@@ -69,3 +69,7 @@ resource "aws_iam_role_policy" "codebuild_policy" {
     ]
   })
 }
+
+output "role" {
+  value = aws_iam_role.codebuild_role.name
+}
