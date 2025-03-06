@@ -25,7 +25,10 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         Action = [
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
-          "logs:PutLogEvents"
+          "logs:PutLogEvents",
+          "codebuild:CreateWebhook",
+          "codebuild:DeleteWebhook",
+          "codebuild:UpdateWebhook",   
         ]
         Effect   = "Allow"
         Resource = "*"
@@ -44,11 +47,29 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         Action = [
           "codebuild:BatchGetBuilds",
           "codebuild:StartBuild",
-          "codebuild:BatchGetProjects"
+          "codebuild:BatchGetProjects",
+          "codebuild:StopBuild",
+          "codebuild:BatchGetBuilds",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+
+      {
+        Action = [
+         "codestar-connections:GetConnectionToken",
+         "codestar-connections:GetConnection",
+         "codeconnections:GetConnectionToken",
+         "codeconnections:GetConnection",
+         "codeconnections:UseConnection"
         ]
         Effect   = "Allow"
         Resource = "*"
       }
     ]
   })
+}
+
+output "role" {
+  value = aws_iam_role.codebuild_role.name
 }
