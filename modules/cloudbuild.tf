@@ -37,8 +37,8 @@ resource "aws_codebuild_webhook" "codebuild_webhook" {
   build_type   = "BUILD"
   filter_group {
     filter {
-      type    = "EVENT"
-      pattern = "PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED,PULL_REQUEST_REOPENED"
+      type    = var.webhook_event_type
+      pattern = var.webhook_event_pattern
     }
 
     filter {
