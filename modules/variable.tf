@@ -70,12 +70,7 @@ variable "filter_group" {
     }))
     default = []
 }
-variable "branch" {
-    description = "The branch to trigger the build"
-    type        = string
-    default = "main"
-  
-}
+
 
 variable "build_timeout" {
     description = "The build timeout in minutes"
