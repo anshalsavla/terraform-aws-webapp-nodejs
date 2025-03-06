@@ -130,5 +130,5 @@ dist
 .pnp.*
 
 #terraform
-.terraform
+.terraform/*
 *.tfstate.*
