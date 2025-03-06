@@ -49,5 +49,5 @@ resource "aws_codebuild_webhook" "codebuild_webhook" {
 }
 
 output "codebuild_project" {
-  value = aws_codebuild_project.codebuild.name 
+  value = aws_codebuild_project.codebuild 
 }
