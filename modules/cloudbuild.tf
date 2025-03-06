@@ -7,7 +7,7 @@ resource "aws_codebuild_project" "codebuild" {
 
   source {
     type            = "GITHUB"
-    location        = var.repo
+    location        = "https://github.com/${var.repo}.git"
     buildspec       = var.buildspec
     git_clone_depth = 1
     report_build_status = true
@@ -18,14 +18,32 @@ resource "aws_codebuild_project" "codebuild" {
   }
 
   environment {
-    compute_type                = "BUILD_LAMBDA_1GB"
-    image                       = "aws/codebuild/amazonlinux-x86_64-lambda-standard:nodejs20"
-    type                        = "LINUX_LAMBDA_CONTAINER"
-    environment_variable {
-      name  = "NODE_ENV"
-      value = "test"
+    compute_type                = var.compute_type
+    image                       = var.image
+    type                        = var.compute_type
+    dynamic "environment_variable" {
+      for_each = var.environment_variables
+      content {
+        name  = environment_variable.value.name
+        value = environment_variable.value.value
+      }
     }
   }
 
 }
 
+resource "aws_codebuild_webhook" "codebuild_webhook" {
+  project_name = aws_codebuild_project.codebuild.name
+  build_type   = "BUILD"
+  filter_group {
+    filter {
+      type    = "EVENT"
+      pattern = "PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED,PULL_REQUEST_REOPENED"
+    }
+
+    filter {
+      type    = "BASE_REF"
+      pattern = "master"
+    }
+  }
+}
